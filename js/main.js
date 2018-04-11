@@ -2,21 +2,24 @@
 
 let nameField = $('#name');
 let otherJob = $('#other-title');
-
+let selectMenu = $('#title');
+let selectOpt = $('#title option:selected').val();
 // Setting focus to first form field on pageLoad
 
 nameField.focus();
 
 // Hide the Other Job Role Html option until user clicks other
 // add user input to a text field that already exists in HTML file
-
-function jobTitle() {
-  otherJob.hide();
-  if($('#title').val("other")){
+otherJob.hide();
+selectMenu.change(function(){
+  if(selectOpt == "other") {
     otherJob.show();
+  } else {
+    otherJob.hide();
   }
-}
-jobTitle();
+
+});
+
 // function that hides the color option select menu until design option is chosen
 // and only displays T-shirt color options to matched design options
 
