@@ -12,13 +12,12 @@ nameField.focus();
 // add user input to a text field that already exists in HTML file
 otherJob.hide();
 selectMenu.change(function(){
-let selectOpt = $('#title option:selected').text();
-  if(selectOpt === "Other") {
-    otherJob.show();
-  } else {
-    otherJob.hide();
-  }
-
+  let selectOpt = $('#title option:selected').text();
+    if(selectOpt === "Other") {
+      otherJob.show();
+    } else {
+      otherJob.hide();
+    }
 });
 
 // function that hides the color option select menu until design option is chosen
