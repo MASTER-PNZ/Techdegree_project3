@@ -1,9 +1,9 @@
 // Variables to get html form elements
 
-let nameField = $('#name');
-let otherJob = $('#other-title');
-let selectMenu = $('#title');
-let selectOpt = $('#title option:selected').val();
+const nameField = $('#name');
+const otherJob = $('#other-title');
+const selectMenu = $('#title');
+//let selectOpt = $('#title option:selected').text();
 // Setting focus to first form field on pageLoad
 
 nameField.focus();
@@ -12,7 +12,8 @@ nameField.focus();
 // add user input to a text field that already exists in HTML file
 otherJob.hide();
 selectMenu.change(function(){
-  if(selectOpt == "other") {
+let selectOpt = $('#title option:selected').text();
+  if(selectOpt === "Other") {
     otherJob.show();
   } else {
     otherJob.hide();
