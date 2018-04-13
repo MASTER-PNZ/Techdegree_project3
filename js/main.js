@@ -27,15 +27,26 @@ $jobSelectMenu.change(function(){
 // function that hides the color option select menu until design option is chosen
 // and only displays T-shirt color options to matched design options
 
-
+function colorOption1 () {
     $('#color option').each(function(index){
-      $(this).hide();
         if(index <= 2) {
-          $(this).show();
+          $(this).append();
         } else {
-          $(this).hide();
+          $(this).remove();
         }
     });
+}
+
+function colorOption2 () {
+    $('#color option').each(function(index){
+        if(index >= 3) {
+          $(this).append();
+        } else {
+            $(this).remove();
+        }
+    });
+}
+
 
 // function that disables or activates conflicting scheduled event checkboxes
 // as they are matched
