@@ -4,6 +4,7 @@ const $otherJob = $('#other-title');
 const $jobSelectMenu = $('#title');
 const $colorSelectMenu = $('#color');
 const $themeSelectMenu = $('#design');
+const $activities = $('.activities')
 // Setting focus to first form field on pageLoad
 $nameField.focus();
 // Hide the Other Job Role Html option until user clicks other
@@ -37,7 +38,7 @@ function colorOption2 () {
 $('#colors-js-puns').hide();
 $themeSelectMenu.change(function(){
   colorOptionNone();
-   $('#colors-js-puns').show(1000);
+   $('#colors-js-puns').show(500);
   let $selectedTheme = $('#design option:selected').text();
   const $punsThemes = $('#design option[value="js puns"]').text();
   const $heartThemes = $('#design option[value="heart js"]').text();
@@ -47,13 +48,14 @@ $themeSelectMenu.change(function(){
   } else if ($selectedTheme == $heartThemes) {
     colorOption2();
   } else {
-     $('#colors-js-puns').hide(1000);
+     $('#colors-js-puns').hide(500);
   }
 });
 
-
 // function that disables or activates conflicting scheduled event checkboxes
 // as they are matched
+
+function
 
 
 // function that displays a running total of checked events.
