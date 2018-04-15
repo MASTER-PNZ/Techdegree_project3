@@ -4,7 +4,8 @@ const $otherJob = $('#other-title');
 const $jobSelectMenu = $('#title');
 const $colorSelectMenu = $('#color');
 const $themeSelectMenu = $('#design');
-const $activities = $('.activities')
+const $activities = $('.activities');
+const $activityBox = $('.activities :checkbox');
 // Setting focus to first form field on pageLoad
 $nameField.focus();
 // Hide the Other Job Role Html option until user clicks other
@@ -51,11 +52,47 @@ $themeSelectMenu.change(function(){
      $('#colors-js-puns').hide(500);
   }
 });
-
 // function that disables or activates conflicting scheduled event checkboxes
 // as they are matched
+$activityBox.change(function(){
+  const $js_frameworksBox = $('.activities input:eq(1)');
+  const $js_frameworksLabel = $('.activities label:eq(1)');
+  const $js_libsBox = $('.activities input:eq(2)');
+  const $js_libsLabel = $('.activities label:eq(2)');
+  const $expressBox = $('.activities input:eq(3)');
+  const $expressLabel = $('.activities label:eq(3)');
+  const $nodeBox = $('.activities input:eq(4)');
+  const $nodeLabel = $('.activities label:eq(4)');
 
-function
+  if ($js_frameworksBox.is(':checked')) {
+    $expressBox.prop('disabled', true);
+    $expressLabel.css("color", "grey");
+  } else {
+      $expressBox.prop('disabled', false);
+      $expressLabel.css("color", "");
+    }
+  if ($expressBox.is(':checked')) {
+    $js_frameworksBox.prop('disabled', true);
+    $js_frameworksLabel.css("color", "grey");
+  } else {
+      $js_frameworksBox.prop('disabled', false);
+      $js_frameworksLabel.css("color", "");
+    }
+  if ($js_libsBox.is(':checked')) {
+    $nodeBox.prop('disabled', true);
+    $nodeLabel.css("color", "grey");
+  } else {
+      $nodeBox.prop('disabled', false);
+      $nodeLabel.css("color", "");
+      }
+  if ($nodeBox.is(':checked')) {
+    $js_libsBox.prop('disabled', true);
+    $js_libsLabel.css("color", "grey");
+  } else {
+      $js_libsBox.prop('disabled', false);
+      $js_libsLabel.css("color", "");
+      }
+});
 
 
 // function that displays a running total of checked events.
