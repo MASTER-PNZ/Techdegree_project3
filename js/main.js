@@ -94,9 +94,30 @@ $activityBox.change(function(){
       }
 });
 
-
 // function that displays a running total of checked events.
 
+// $activityBox.change(function(){
+//   let runningTotal = 0;
+//   if ($('.activities input:eq(0)').is(':checked')) {
+//     runningTotal += 200;
+//     $activities.last().append(`<h4>Total: $${runningTotal} </h4>`);
+//   }
+// });
+// `<h4>Total: $${runningTotal} </h4>`
+//
+// $activityBox.change(function(){
+//   let runningTotal = 0;
+//   const $isChecked = $(this).is(':checked');
+  $('.activities label').each(function(){
+  const $text =  $(this).text();
+  const $index = $text.indexOf("$");
+  const $price = $text.slice($index);
+    console.log($price);
+  });
+  // if ($isChecked){
+
+// }
+// });
 
 // function that only displays corresponding payment method
 // CC is first by default
