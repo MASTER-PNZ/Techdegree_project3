@@ -95,13 +95,11 @@ $activityBox.change(function(){
 });
 
 // function that displays a running total of checked events.
-
-// `<h4>Total: $${runningTotal} </h4>`
-
-$activityBox.change(function(){
   let runningTotal = 0;
-  const $isChecked = $(this).is(':checked');
-  const $label = $(this).parent();
+function ConfPrice (currentEvent) {
+
+  const $isChecked = currentEvent.is(':checked');
+  const $label = currentEvent.parent();
   const $text = $label.text();
   const $index = $text.indexOf('$') + 1;
   const $price = $text.slice($index);
@@ -111,7 +109,13 @@ $activityBox.change(function(){
   } else {
     runningTotal -= parseInt($price);
   }
-  console.log(runningTotal);
+  $('#total_price').remove();
+  if (runningTotal > 0) {
+    $activities.append(`<h4 id="total_price">Total: $${runningTotal} </h4>`)
+  }
+}
+$activityBox.change(function(){
+  ConfPrice($(this));
 });
 
 
