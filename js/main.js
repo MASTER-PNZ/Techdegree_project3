@@ -14,7 +14,13 @@ const $nameLabel = $('label[for="name"]');
 const $emailField = $('#mail');
 const $emailLabel = $('label[for="mail"]')
 const $jobSelectLabel = $('label[for="title"]');
-
+const $creditField = $('#cc-num');
+const $creditLabel = $('label[for="cc-num"]');
+const $zipField = $('#zip');
+const $zipLabel = $('label[for="zip"]');
+const $cvvField = $('#cvv');
+const $cvvLabel =  $('label[for="cvv"]');
+const submit = $('button');
 
 // Setting focus to first form field on pageLoad
 $nameField.focus();
@@ -159,36 +165,56 @@ $paymentOpts.change(function(){
 // Selecting HTML elements to validate and storing in Variables
 
 // name field function
-
+function validName(){
+  let user_name = $nameField.val();
+  if ( user_name == "") {
 $nameField.css("border-color", "red");
-$nameLabel.after('<div class="error">Please enter your name!</div>');
-
-
+$nameLabel.after('<div id="name" class="error" style="color:red;">Please enter your name!</div>');
+} else {
+      $nameField.css("border-color", "#c1deeb");
+      $('div [id="name"]').remove();
+  }
+}
+validName();
 // email field function
 
 $emailField.css("border-color", "red");
-$emailLabel.after('<div class="error">Please enter your email address!</div>');
+$emailLabel.after('<div class="error" style="color:red;">Please enter your email address!</div>');
 
 
 // job select menu function
 
-$jobSelectLabel.after('<div class="error">Please choose your Job Title!</div>');
+$jobSelectLabel.after('<div class="error" style="color:red;">Please choose your Job Title!</div>');
 $otherJob.css("border-color", "red");
-$jobSelectMenu.after('<div class="error">Please enter your Job Title!</div>');
+$jobSelectMenu.after('<div class="error" style="color:red;">Please enter your Job Title!</div>');
 
 // t-shirt field function
 
-('<div class="error">Please choose a T-shirt design!</div>');
+$('label[for="design"]').after('<div class="error" style="color:red;">Please choose a T-shirt design!</div>');
 
 // activities field function
 
-
+$activities.after('<div class="error" style="color:red;">Please choose at least one activity!</div>')
 
 // credit card number field function
 
-// credit card date function
+$creditField.css("border-color", "red");
+$creditLabel.after('<div class="error" style="color:red;">Please enter your card number!</div>');
+
+// credit card zip function
+
+$zipField.css("border-color", "red");
+$zipLabel.after('<div class="error" style="color:red;">Please enter zip!</div>');
+
 
 // credit card CVV function
-$('.error').css("color", "red");
+
+$cvvField.css("border-color", "red");
+$cvvLabel.after('<div class="error" style="color:red;">Please enter CVV!</div>');
 
 //submission event handler that calls error functions.
+
+$('button').submit(function(e) {
+
+  e.preventDefault();
+});
