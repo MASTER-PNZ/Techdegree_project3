@@ -129,21 +129,22 @@ $paypalInfo.hide();
 $bitcoinInfo.hide();
 $paymentOpts.val("credit card").attr("selected", true);
 $paymentOpts.change(function(){
-  if($(this).val() == "credit card") {
-    $creditcardForm.show();
-    $bitcoinInfo.hide();
-    $paypalInfo.hide();
+
+  if ($(this).val() == "credit card") {
+    $creditcardForm.show(500);
+    $bitcoinInfo.hide(500);
+    $paypalInfo.hide(500);
   } else if ($(this).val() == "paypal") {
-    $paypalInfo.show();
-    $bitcoinInfo.hide();
-    $creditcardForm.hide();
+      $paypalInfo.show(500);
+      $bitcoinInfo.hide(500);
+      $creditcardForm.hide(500);
   } else if ($(this).val() == "bitcoin") {
-    $bitcoinInfo.show();
-    $paypalInfo.hide();
-    $creditcardForm.hide();
+      $bitcoinInfo.show(500);
+      $paypalInfo.hide(500);
+      $creditcardForm.hide(500);
   } else if ($(this).val() == "select_method") {
-    $paypalInfo.hide();
-    $bitcoinInfo.hide();
-    $creditcardForm.hide();
+      $paypalInfo.hide(1000);
+      $bitcoinInfo.hide(1000);
+      $creditcardForm.hide(1000);
   }
 });
