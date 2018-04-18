@@ -148,3 +148,19 @@ $paymentOpts.change(function(){
       $creditcardForm.hide(1000);
   }
 });
+
+/*==============================Form Validation==============================*/
+
+// Selecting HTML elements to validate and storing in Variables
+
+// name field function
+
+// email field function
+
+// checkbox field function
+
+// credit card number field function
+
+// credit card date function
+
+// credit card CVV function
