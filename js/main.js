@@ -6,6 +6,11 @@ const $colorSelectMenu = $('#color');
 const $themeSelectMenu = $('#design');
 const $activities = $('.activities');
 const $activityBox = $('.activities :checkbox');
+const $paymentOpts = $('#payment');
+const $creditcardForm = $('#credit-card');
+const $paypalInfo = $('p:contains("PayPal")');
+const $bitcoinInfo = $('p:contains("Bitcoin")');
+
 // Setting focus to first form field on pageLoad
 $nameField.focus();
 // Hide the Other Job Role Html option until user clicks other
@@ -118,11 +123,27 @@ $activityBox.change(function(){
   ConfPrice($(this));
 });
 
-
-
-
-
-
-
 // function that only displays corresponding payment method
 // CC is first by default
+$paypalInfo.hide();
+$bitcoinInfo.hide();
+$paymentOpts.val("credit card").attr("selected", true);
+$paymentOpts.change(function(){
+  if($(this).val() == "credit card") {
+    $creditcardForm.show();
+    $bitcoinInfo.hide();
+    $paypalInfo.hide();
+  } else if ($(this).val() == "paypal") {
+    $paypalInfo.show();
+    $bitcoinInfo.hide();
+    $creditcardForm.hide();
+  } else if ($(this).val() == "bitcoin") {
+    $bitcoinInfo.show();
+    $paypalInfo.hide();
+    $creditcardForm.hide();
+  } else if ($(this).val() == "select_method") {
+    $paypalInfo.hide();
+    $bitcoinInfo.hide();
+    $creditcardForm.hide();
+  }
+});
