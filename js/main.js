@@ -11,6 +11,9 @@ const $creditcardForm = $('#credit-card');
 const $paypalInfo = $('p:contains("PayPal")');
 const $bitcoinInfo = $('p:contains("Bitcoin")');
 const $nameLabel = $('label[for="name"]');
+const $emailField = $('#mail');
+const $emailLabel = $('label[for="mail"]')
+const $jobSelectLabel = $('label[for="title"]');
 
 
 // Setting focus to first form field on pageLoad
@@ -158,20 +161,34 @@ $paymentOpts.change(function(){
 // name field function
 
 $nameField.css("border-color", "red");
-$nameLabel.after('<div id="error">Please enter your name!<div>');
-$('#error').css("color", "red");
+$nameLabel.after('<div class="error">Please enter your name!</div>');
+
 
 // email field function
 
+$emailField.css("border-color", "red");
+$emailLabel.after('<div class="error">Please enter your email address!</div>');
 
 
+// job select menu function
 
-// checkbox field function
+$jobSelectLabel.after('<div class="error">Please choose your Job Title!</div>');
+$otherJob.css("border-color", "red");
+$jobSelectMenu.after('<div class="error">Please enter your Job Title!</div>');
+
+// t-shirt field function
+
+('<div class="error">Please choose a T-shirt design!</div>');
+
+// activities field function
+
+
 
 // credit card number field function
 
 // credit card date function
 
 // credit card CVV function
+$('.error').css("color", "red");
 
 //submission event handler that calls error functions.
