@@ -10,6 +10,8 @@ const $paymentOpts = $('#payment');
 const $creditcardForm = $('#credit-card');
 const $paypalInfo = $('p:contains("PayPal")');
 const $bitcoinInfo = $('p:contains("Bitcoin")');
+const $nameLabel = $('label[for="name"]');
+
 
 // Setting focus to first form field on pageLoad
 $nameField.focus();
@@ -155,7 +157,14 @@ $paymentOpts.change(function(){
 
 // name field function
 
+$nameField.css("border-color", "red");
+$nameLabel.after('<div id="error">Please enter your name!<div>');
+$('#error').css("color", "red");
+
 // email field function
+
+
+
 
 // checkbox field function
 
@@ -164,3 +173,5 @@ $paymentOpts.change(function(){
 // credit card date function
 
 // credit card CVV function
+
+//submission event handler that calls error functions.
