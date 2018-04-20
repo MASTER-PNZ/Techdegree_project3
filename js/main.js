@@ -162,59 +162,91 @@ $paymentOpts.change(function(){
 
 /*==============================Form Validation==============================*/
 
-// Selecting HTML elements to validate and storing in Variables
 
-// name field function
+
+//============================ name field function
 function validName(){
-  let user_name = $nameField.val();
-  if ( user_name == "") {
-$nameField.css("border-color", "red");
-$nameLabel.after('<div id="name" class="error" style="color:red;">Please enter your name!</div>');
-} else {
-      $nameField.css("border-color", "#c1deeb");
-      $('div [id="name"]').remove();
-  }
-}
-validName();
-// email field function
-
+  let isValid = true;
+  let userName = $('#name').val();
+  let nameRX = /^[a-zA-Z]+$/;
+  $nameField.css("border-color", "#c1deeb")
+  $('.error').remove();
+    if (userName == "" || !userName.match(nameRX)) {
+      isValid = false;
+      $nameField.css("border-color", "red");
+      $nameLabel.after('<div id="name" class="error" style="color:red;">Please enter your name!</div>');
+    }
+  return isValid;
+};
+$('#name').change(function(){
+  validName();
+});
+// ===========================email field function
+function validEmail(){
+  let isValid = true;
+  let userEmail = $emailField.val();
+  let emailRX = /^[w-.+]+@[a-zA-Z0-9.-]+.[a-zA-z0-9]{2,4}$/;
+  $emailField.css("border-color", "#c1deeb")
+  $('.error').remove();
+  if (userEmail == ""){
+    isValid = false;
 $emailField.css("border-color", "red");
 $emailLabel.after('<div class="error" style="color:red;">Please enter your email address!</div>');
+} else if (!userEmail.match(emailRX)){
+  isValid = false;
+$emailLabel.after('<div class="error" style="color:red;">Please use this email format: name@mail.com!</div>');
+$emailField.css("border-color", "red");
+}
+return isValid;
+}
 
-
-// job select menu function
-
-$jobSelectLabel.after('<div class="error" style="color:red;">Please choose your Job Title!</div>');
+//=========================== job select menu function
+function validJob(){
+let isValid = true;
+let userOtherJob = $('#title option:selected')[5];
+$('.error').remove();
+$otherJob.css("border-color", "#c1deeb")
+if (userOtherJob && $('#other-title').val()  == "") {
+  isValid = false;
 $otherJob.css("border-color", "red");
 $jobSelectMenu.after('<div class="error" style="color:red;">Please enter your Job Title!</div>');
+}
+return isValid;
+}
+validJob();
+// ===========================t-shirt field function
 
-// t-shirt field function
-
+function validTshirt (){
 $('label[for="design"]').after('<div class="error" style="color:red;">Please choose a T-shirt design!</div>');
-
+}
 // activities field function
 
+function validActivity(){
 $activities.after('<div class="error" style="color:red;">Please choose at least one activity!</div>')
+}
 
-// credit card number field function
-
+// credit card number validations function
+function validCreditCard (){
 $creditField.css("border-color", "red");
 $creditLabel.after('<div class="error" style="color:red;">Please enter your card number!</div>');
-
-// credit card zip function
 
 $zipField.css("border-color", "red");
 $zipLabel.after('<div class="error" style="color:red;">Please enter zip!</div>');
 
-
-// credit card CVV function
-
 $cvvField.css("border-color", "red");
 $cvvLabel.after('<div class="error" style="color:red;">Please enter CVV!</div>');
+}
 
+//validation function to qualify errors
+function validForm(){
+
+}
 //submission event handler that calls error functions.
 
-$('button').submit(function(e) {
-
-  e.preventDefault();
-});
+// $('button').on('click', function(event) {
+//
+//   if(){
+//   event.preventDefault();
+//   }
+//
+// });
