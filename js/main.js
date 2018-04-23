@@ -185,7 +185,7 @@ $('#name').change(function(){
 function validEmail(){
   let isValid = true;
   let userEmail = $emailField.val();
-  let emailRX = /^[w-.+]+@[a-zA-Z0-9.-]+.[a-zA-z0-9]{2,4}$/;
+  let emailRX =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   $emailField.css("border-color", "#c1deeb")
   $('.error').remove();
   if (userEmail == ""){
@@ -199,32 +199,57 @@ $emailField.css("border-color", "red");
 }
 return isValid;
 }
-
+$emailField.change(function(){
+  validEmail();
+});
 //=========================== job select menu function
 function validJob(){
 let isValid = true;
 let userOtherJob = $('#title option:selected')[5];
-$('.error').remove();
-$otherJob.css("border-color", "#c1deeb")
 if (userOtherJob && $('#other-title').val()  == "") {
   isValid = false;
 $otherJob.css("border-color", "red");
 $jobSelectMenu.after('<div class="error" style="color:red;">Please enter your Job Title!</div>');
+} else {
+  $otherJob.css("border-color", "#c1deeb")
+  $('.error').remove();
 }
 return isValid;
 }
-validJob();
+$jobSelectMenu.change(function(){
+  validJob();
+});
 // ===========================t-shirt field function
 
 function validTshirt (){
+  let isValid = true;
+  let noDesign = $('#design option:selected').val();
+  $('.error').remove();
+  if(noDesign == "Select Theme") {
+  isValid = false;
 $('label[for="design"]').after('<div class="error" style="color:red;">Please choose a T-shirt design!</div>');
+} else {
+  $('.error').remove();
 }
+  return isValid;
+}
+$('#design').change(function(){
+validTshirt();
+});
 // activities field function
 
 function validActivity(){
-$activities.after('<div class="error" style="color:red;">Please choose at least one activity!</div>')
+  let isValid = false;
+  let anyBox = $('#activities:checked').length;
+  if (anyBox == 0) {
+    isValid = true;
+$activities.after('<div class="error" style="color:red;">Please choose at least one activity!</div>');
 }
-
+return isValid;
+}
+$activityBox.change(function(){
+  validActivity();
+});
 // credit card number validations function
 function validCreditCard (){
 $creditField.css("border-color", "red");
@@ -239,6 +264,7 @@ $cvvLabel.after('<div class="error" style="color:red;">Please enter CVV!</div>')
 
 //validation function to qualify errors
 function validForm(){
+
 
 }
 //submission event handler that calls error functions.
