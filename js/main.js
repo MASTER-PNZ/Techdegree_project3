@@ -297,7 +297,7 @@ function validCVV(){
   if (  $userCVV.length != 3 || !$userCVV.match(cvvRX) ) {
      isValid = false;
      $cvvField.css("border-color", "red");
-     $cvvLabel.after('<div id="cvv-error"class="error" style="color:red;">Please enter CVV!</div>');
+     $cvvLabel.after('<div id="cvv-error" class="error" style="color:red;">Please enter CVV!</div>');
    } else {
      $cvvField.css("border-color", "");
      $('#cvv-error').remove();
