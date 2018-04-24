@@ -55,18 +55,18 @@ function colorOption2 () {
 $('#colors-js-puns').hide();
 $themeSelectMenu.change(function(){
   colorOptionNone();
-   $('#colors-js-puns').show(500);
+  $('#colors-js-puns').show(500);
   let $selectedTheme = $('#design option:selected').text();
   const $punsThemes = $('#design option[value="js puns"]').text();
   const $heartThemes = $('#design option[value="heart js"]').text();
   const $selectTheme = $('#design option[value="Select Theme"]').text();
-  if ($selectedTheme == $punsThemes) {
-    colorOption1();
-  } else if ($selectedTheme == $heartThemes) {
-    colorOption2();
-  } else {
+    if ($selectedTheme == $punsThemes) {
+      colorOption1();
+    } else if ($selectedTheme == $heartThemes) {
+      colorOption2();
+    } else {
      $('#colors-js-puns').hide(500);
-  }
+   }
 });
 // function that disables or activates conflicting scheduled event checkboxes
 // as they are matched
@@ -111,7 +111,7 @@ $activityBox.change(function(){
 });
 
 // function that displays a running total of checked events.
-  let runningTotal = 0;
+let runningTotal = 0;
 function ConfPrice (currentEvent) {
 
   const $isChecked = currentEvent.is(':checked');
@@ -176,11 +176,11 @@ function validName(){
       $nameField.css("border-color", "red");
       $nameLabel.after('<div id="name-error" class="error" style="color:red;">Please enter your name!</div>');
     }
-  else {
+    else {
       $nameField.css("border-color", "");
       $('#name-error').remove();
     }
-  return isValid;
+    return isValid;
 }
 $('#name').on('input',function(){
   validName();
@@ -195,17 +195,17 @@ function validEmail(){
   $('#email-error2').remove();
   if (userEmail.length == 0){
     isValid = false;
-$emailField.css("border-color", "red");
-$emailLabel.after('<div id="email-error1" class="error" style="color:red;">Please enter your email address!</div>');
-} else if (!userEmail.match(emailRX)){
-  isValid = false;
-$emailLabel.after('<div id="email-error2" class="error" style="color:red;">Please use this email format: name@mail.com!</div>');
-$emailField.css("border-color", "red");
-} else {
-  $emailField.css("border-color", "")
-  $('#email-error1').remove();
-  $('#email-error2').remove();
-}
+    $emailField.css("border-color", "red");
+    $emailLabel.after('<div id="email-error1" class="error" style="color:red;">Please enter your email address!</div>');
+  } else if (!userEmail.match(emailRX)){
+    isValid = false;
+    $emailLabel.after('<div id="email-error2" class="error" style="color:red;">Please use this email format: name@mail.com!</div>');
+    $emailField.css("border-color", "red");
+  } else {
+    $emailField.css("border-color", "")
+    $('#email-error1').remove();
+    $('#email-error2').remove();
+  }
 return isValid;
 }
 $emailField.on('input', function(){
@@ -220,11 +220,11 @@ function validTshirt (){
   $('#tshirt-error').remove();
   if(noDesign == "Select Theme") {
   isValid = false;
-$('label[for="design"]').after('<div id="tshirt-error" class="error" style="color:red;">Please choose a T-shirt design!</div>');
-} else {
-  $('#tshirt-error').remove();
-}
-  return isValid;
+  $('label[for="design"]').after('<div id="tshirt-error" class="error" style="color:red;">Please choose a T-shirt design!</div>');
+  } else {
+    $('#tshirt-error').remove();
+  }
+return isValid;
 }
 $('#design').change(function(){
 validTshirt();
@@ -237,17 +237,16 @@ function validActivity(){
   let anyBox = $('input:checked').length;
   if (anyBox == 0) {
     isValid = false;
-$activities.after('<div id="activity-error" class="error" style="color:red;">Please choose at least one activity!</div>');
-}
-else {
-  $('#activity-error').remove();
-}
+    $activities.after('<div id="activity-error" class="error" style="color:red;">Please choose at least one activity!</div>');
+  } else {
+    $('#activity-error').remove();
+  }
 return isValid;
 }
 $activityBox.change(function(){
   validActivity();
 });
-// ===========================credit card number validations function
+// ===========================credit card input validation functions
 function validCCNum(){
   $('#ccnum-error1').remove();
   $('#ccnum-error2').remove();
@@ -275,7 +274,6 @@ function validCCNum(){
     $('#ccnum-error1').remove();
     $('#ccnum-error2').remove();
     $creditField.css("border-color", "");
-
   }
   return isValid;
 }
@@ -293,8 +291,8 @@ function validZip(){
   else {
    $('#zip-error').remove();
    $zipField.css("border-color", "");
- }
- return isValid;
+  }
+  return isValid;
 }
 
 function validCVV(){
@@ -322,7 +320,7 @@ $zipField.on('input', function(){
 $cvvField.on('input', function(){
   validCVV();
 });
-//===========================validation function to qualify errors
+//===========================validation function to call error functions
 function validForm(event){
   validName();
   validEmail();
@@ -341,7 +339,7 @@ if ($('#payment option[value="credit card"]').is(':selected')){
   }
 }
 
-//===========================submission event handler that calls error functions.
+//=====submission event handler that runs validations and prevents form refresh.
 
 $('form').on('submit', function(event) {
 let userError = validForm();
