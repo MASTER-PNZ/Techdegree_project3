@@ -169,15 +169,19 @@ function validName(){
   let isValid = true;
   let userName = $('#name').val();
   let nameRX = /^[a-zA-Z]+$/;
-  $nameField.css("border-color", "#c1deeb")
+  $nameField.css("border-color", "");
   $('.error').remove();
-    if (userName == "" || !userName.match(nameRX)) {
+    if (userName.length == 0 || !userName.match(nameRX)) {
       isValid = false;
       $nameField.css("border-color", "red");
       $nameLabel.after('<div id="name" class="error" style="color:red;">Please enter your name!</div>');
     }
+  else {
+      $nameField.css("border-color", "");
+      $('.error').remove();
+    }
   return isValid;
-};
+}
 $('#name').change(function(){
   validName();
 });
@@ -186,7 +190,7 @@ function validEmail(){
   let isValid = true;
   let userEmail = $emailField.val();
   let emailRX =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  $emailField.css("border-color", "#c1deeb")
+  $emailField.css("border-color", "")
   $('.error').remove();
   if (userEmail == ""){
     isValid = false;
@@ -206,12 +210,12 @@ $emailField.change(function(){
 function validJob(){
 let isValid = true;
 let userOtherJob = $('#title option:selected')[5];
-if (userOtherJob && $('#other-title').val()  == "") {
+if (userOtherJob && $('#other-title').val().length  == 0) {
   isValid = false;
 $otherJob.css("border-color", "red");
 $jobSelectMenu.after('<div class="error" style="color:red;">Please enter your Job Title!</div>');
 } else {
-  $otherJob.css("border-color", "#c1deeb")
+  $otherJob.css("border-color", "");
   $('.error').remove();
 }
 return isValid;
@@ -223,7 +227,7 @@ $jobSelectMenu.change(function(){
 
 function validTshirt (){
   let isValid = true;
-  let noDesign = $('#design option:selected').val();
+  let noDesign = $('#design option:selected').text();
   $('.error').remove();
   if(noDesign == "Select Theme") {
   isValid = false;
@@ -236,43 +240,79 @@ $('label[for="design"]').after('<div class="error" style="color:red;">Please cho
 $('#design').change(function(){
 validTshirt();
 });
-// activities field function
+// ===========================activities field function
 
 function validActivity(){
-  let isValid = false;
-  let anyBox = $('#activities:checked').length;
+  $('.error').remove();
+  let isValid = true;
+  let anyBox = $('input:checked').length;
   if (anyBox == 0) {
-    isValid = true;
+    isValid = false;
 $activities.after('<div class="error" style="color:red;">Please choose at least one activity!</div>');
+}
+else {
+  $('.error').remove();
 }
 return isValid;
 }
 $activityBox.change(function(){
   validActivity();
 });
-// credit card number validations function
+// ===========================credit card number validations function
 function validCreditCard (){
-$creditField.css("border-color", "red");
-$creditLabel.after('<div class="error" style="color:red;">Please enter your card number!</div>');
-
-$zipField.css("border-color", "red");
-$zipLabel.after('<div class="error" style="color:red;">Please enter zip!</div>');
-
-$cvvField.css("border-color", "red");
-$cvvLabel.after('<div class="error" style="color:red;">Please enter CVV!</div>');
+  $('.error').remove();
+  let isValid = true;
+  let $userCCNum = $('#cc-num').val();
+  let zipRX = /^[0-9]+$/;
+  let cvvRX = /^[0-9]+$/;
+  let $userZip = $('#zip').val();
+  let $userCVV = $('#cvv').val();
+  if($userCCNum.length == 0 ) {
+    isValid = false;
+    $creditField.css("border-color", "red");
+    $creditLabel.after('<div class="error" style="color:red;">Please enter your card number!</div>');
+  } if ( ($userCCNum.length > 16 || $userCVV.length < 13) || isNaN($userCCNum) ) {
+    isValid = false;
+    $creditField.css("border-color", "red");
+    $creditLabel.after('<div class="error" style="color:red;">Please use a number between 13-16 digits!</div>');
+  } if ( ($userZip.length != 5 || $userZip.length == 0) && !$userZip.match(zipRX)) {
+    isValid = false;
+    $zipField.css("border-color", "red");
+    $zipLabel.after('<div class="error" style="color:red;">Please enter zip!</div>');
+  } if ( ($userCVV.length == 0 || $userCVV.length != 3) && !$userCVV.match(cvvRX) ) {
+    isValid = false;
+    $cvvField.css("border-color", "red");
+    $cvvLabel.after('<div class="error" style="color:red;">Please enter CVV!</div>');
+  }
+  if (isValid != true) {
+    $('.error').remove();
+    $creditField.css("border-color", "");
+    $zipField.css("border-color", "");
+    $cvvField.css("border-color", "");
+  } else {
+    $('.error').remove();
+  }
+  return isValid;
 }
 
-//validation function to qualify errors
-function validForm(){
+//===========================validation function to qualify errors
+function validForm(event){
+  validName();
+  validEmail()
+  validJob()
+  validTshirt()
+  validActivity()
 
-
+   if ($('#payment option:selected')[1]) {
+   validCreditCard()
+   }
 }
-//submission event handler that calls error functions.
 
-// $('button').on('click', function(event) {
-//
-//   if(){
-//   event.preventDefault();
-//   }
-//
-// });
+//===========================submission event handler that calls error functions.
+
+$('form').on('submit', function(event) {
+let userError = validForm();
+if (userError) {
+event.preventDefault();
+}
+});
