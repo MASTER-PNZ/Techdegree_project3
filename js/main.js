@@ -197,7 +197,7 @@ function validEmail(){
     isValid = false;
 $emailField.css("border-color", "red");
 $emailLabel.after('<div id="email-error1" class="error" style="color:red;">Please enter your email address!</div>');
-} if (!userEmail.match(emailRX)){
+} else if (!userEmail.match(emailRX)){
   isValid = false;
 $emailLabel.after('<div id="email-error2" class="error" style="color:red;">Please use this email format: name@mail.com!</div>');
 $emailField.css("border-color", "red");
@@ -211,25 +211,7 @@ return isValid;
 $emailField.on('input', function(){
   validEmail();
 });
-//=========================== job select menu function
-function validJob(){
-let isValid = true;
-let userOtherJob = $('#title option[value="other"]');
-$otherJob.css("border-color", "");
-$('#job-error').remove();
-if ($('#other-title').val().length == 0) {
-  isValid = false;
-$otherJob.css("border-color", "red");
-$jobSelectMenu.after('<div id="job-error" class="error" style="color:red;">Please enter your Job Title!</div>');
-} else {
-  $otherJob.css("border-color", "");
-  $('#job-error').remove();
-}
-return isValid;
-}
-$jobSelectMenu.on('input', function(){
-  validJob();
-});
+
 // ===========================t-shirt field function
 
 function validTshirt (){
@@ -267,20 +249,21 @@ $activityBox.change(function(){
 });
 // ===========================credit card number validations function
 function validCCNum(){
-  $('#ccnum-error').remove();
+  $('#ccnum-error1').remove();
+  $('#ccnum-error2').remove();
   $creditField.css("border-color", "");
   let isValid = true;
   let $userCCNum = $('#cc-num').val();
   if($userCCNum.length == 0 ) {
     isValid = false;
     $creditField.css("border-color", "red");
-    $creditLabel.after('<div id="ccnum-error" class="error" style="color:red;">Please enter your card number!</div>');
-  }  if ( ($userCCNum.length <= 16 || $userCVV.length >= 13) || isNaN($userCCNum) ) {
+    $creditLabel.after('<div id="ccnum-error1" class="error" style="color:red;">Please enter your card number!</div>');
+  } else if ( ($userCCNum.length < 13 || $userCVV.length > 16) || isNaN($userCCNum) ) {
     isValid = false;
     $creditField.css("border-color", "red");
-    $creditLabel.after('<div id="ccnum-error" class="error" style="color:red;">Please use a number between 13-16 digits!</div>');
+    $creditLabel.after('<div id="ccnum-error2" class="error" style="color:red;">Please use a number between 13-16 digits!</div>');
  }
-   else if (isValid != false) {
+   else {
     $('#ccnum-error').remove();
     $creditField.css("border-color", "");
 
@@ -294,7 +277,7 @@ function validZip(){
   let isValid = true;
   let zipRX = /^[0-9]+$/;
   let $userZip = $('#zip').val();
-  if ( ($userZip.length !== 5 || $userZip.length == 0) && !$userZip.match(zipRX)) {
+  if ( $userZip.length !== 5 || isNan($userZip)) {
     isValid = false;
     $zipField.css("border-color", "red");
     $zipLabel.after('<div id="zip-error" class="error" style="color:red;">Please enter zip!</div>');
@@ -311,11 +294,11 @@ function validCVV(){
   $cvvField.css("border-color", "");
   let cvvRX = /^[0-9]+$/;
   let $userCVV = $('#cvv').val();
-  if ( ($userCVV.length == 0 || $userCVV.length != 3) && !$userCVV.match(cvvRX) ) {
+  if (  $userCVV.length != 3 || !$userCVV.match(cvvRX) ) {
      isValid = false;
      $cvvField.css("border-color", "red");
      $cvvLabel.after('<div id="cvv-error"class="error" style="color:red;">Please enter CVV!</div>');
-   } else if (isValid != false) {
+   } else {
      $cvvField.css("border-color", "");
      $('#cvv-error').remove();
    }
@@ -330,11 +313,10 @@ $zipField.on('input', function(){
 $cvvField.on('input', function(){
   validCVV();
 });
-===========================validation function to qualify errors
-function validForm(){
+//===========================validation function to qualify errors
+function validForm(event){
   validName();
   validEmail();
-  validJob();
   validTshirt();
   validActivity();
   validCCNum();
@@ -355,5 +337,6 @@ $('form').on('submit', function(event) {
 let userError = validForm();
 if (userError) {
 event.preventDefault();
+return false;
 }
 });
