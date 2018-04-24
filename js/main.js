@@ -170,19 +170,19 @@ function validName(){
   let userName = $('#name').val();
   let nameRX = /^[a-zA-Z]+$/;
   $nameField.css("border-color", "");
-  $('.error').remove();
+  $('#name-error').remove();
     if (userName.length == 0 || !userName.match(nameRX)) {
       isValid = false;
       $nameField.css("border-color", "red");
-      $nameLabel.after('<div id="name" class="error" style="color:red;">Please enter your name!</div>');
+      $nameLabel.after('<div id="name-error" class="error" style="color:red;">Please enter your name!</div>');
     }
   else {
       $nameField.css("border-color", "");
-      $('.error').remove();
+      $('#name-error').remove();
     }
   return isValid;
 }
-$('#name').change(function(){
+$('#name').on('input',function(){
   validName();
 });
 // ===========================email field function
@@ -191,36 +191,43 @@ function validEmail(){
   let userEmail = $emailField.val();
   let emailRX =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   $emailField.css("border-color", "")
-  $('.error').remove();
-  if (userEmail == ""){
+  $('#email-error1').remove();
+  $('#email-error2').remove();
+  if (userEmail.length == 0){
     isValid = false;
 $emailField.css("border-color", "red");
-$emailLabel.after('<div class="error" style="color:red;">Please enter your email address!</div>');
-} else if (!userEmail.match(emailRX)){
+$emailLabel.after('<div id="email-error1" class="error" style="color:red;">Please enter your email address!</div>');
+} if (!userEmail.match(emailRX)){
   isValid = false;
-$emailLabel.after('<div class="error" style="color:red;">Please use this email format: name@mail.com!</div>');
+$emailLabel.after('<div id="email-error2" class="error" style="color:red;">Please use this email format: name@mail.com!</div>');
 $emailField.css("border-color", "red");
+} else {
+  $emailField.css("border-color", "")
+  $('#email-error1').remove();
+  $('#email-error2').remove();
 }
 return isValid;
 }
-$emailField.change(function(){
+$emailField.on('input', function(){
   validEmail();
 });
 //=========================== job select menu function
 function validJob(){
 let isValid = true;
-let userOtherJob = $('#title option:selected')[5];
-if (userOtherJob && $('#other-title').val().length  == 0) {
+let userOtherJob = $('#title option[value="other"]');
+$otherJob.css("border-color", "");
+$('#job-error').remove();
+if ($('#other-title').val().length == 0) {
   isValid = false;
 $otherJob.css("border-color", "red");
-$jobSelectMenu.after('<div class="error" style="color:red;">Please enter your Job Title!</div>');
+$jobSelectMenu.after('<div id="job-error" class="error" style="color:red;">Please enter your Job Title!</div>');
 } else {
   $otherJob.css("border-color", "");
-  $('.error').remove();
+  $('#job-error').remove();
 }
 return isValid;
 }
-$jobSelectMenu.change(function(){
+$jobSelectMenu.on('input', function(){
   validJob();
 });
 // ===========================t-shirt field function
@@ -228,12 +235,12 @@ $jobSelectMenu.change(function(){
 function validTshirt (){
   let isValid = true;
   let noDesign = $('#design option:selected').text();
-  $('.error').remove();
+  $('#tshirt-error').remove();
   if(noDesign == "Select Theme") {
   isValid = false;
-$('label[for="design"]').after('<div class="error" style="color:red;">Please choose a T-shirt design!</div>');
+$('label[for="design"]').after('<div id="tshirt-error" class="error" style="color:red;">Please choose a T-shirt design!</div>');
 } else {
-  $('.error').remove();
+  $('#tshirt-error').remove();
 }
   return isValid;
 }
@@ -243,15 +250,15 @@ validTshirt();
 // ===========================activities field function
 
 function validActivity(){
-  $('.error').remove();
+  $('#activity-error').remove();
   let isValid = true;
   let anyBox = $('input:checked').length;
   if (anyBox == 0) {
     isValid = false;
-$activities.after('<div class="error" style="color:red;">Please choose at least one activity!</div>');
+$activities.after('<div id="activity-error" class="error" style="color:red;">Please choose at least one activity!</div>');
 }
 else {
-  $('.error').remove();
+  $('#activity-error').remove();
 }
 return isValid;
 }
@@ -259,53 +266,87 @@ $activityBox.change(function(){
   validActivity();
 });
 // ===========================credit card number validations function
-function validCreditCard (){
-  $('.error').remove();
+function validCCNum(){
+  $('#ccnum-error').remove();
+  $creditField.css("border-color", "");
   let isValid = true;
   let $userCCNum = $('#cc-num').val();
-  let zipRX = /^[0-9]+$/;
-  let cvvRX = /^[0-9]+$/;
-  let $userZip = $('#zip').val();
-  let $userCVV = $('#cvv').val();
   if($userCCNum.length == 0 ) {
     isValid = false;
     $creditField.css("border-color", "red");
-    $creditLabel.after('<div class="error" style="color:red;">Please enter your card number!</div>');
-  } if ( ($userCCNum.length > 16 || $userCVV.length < 13) || isNaN($userCCNum) ) {
+    $creditLabel.after('<div id="ccnum-error" class="error" style="color:red;">Please enter your card number!</div>');
+  }  if ( ($userCCNum.length <= 16 || $userCVV.length >= 13) || isNaN($userCCNum) ) {
     isValid = false;
     $creditField.css("border-color", "red");
-    $creditLabel.after('<div class="error" style="color:red;">Please use a number between 13-16 digits!</div>');
-  } if ( ($userZip.length != 5 || $userZip.length == 0) && !$userZip.match(zipRX)) {
-    isValid = false;
-    $zipField.css("border-color", "red");
-    $zipLabel.after('<div class="error" style="color:red;">Please enter zip!</div>');
-  } if ( ($userCVV.length == 0 || $userCVV.length != 3) && !$userCVV.match(cvvRX) ) {
-    isValid = false;
-    $cvvField.css("border-color", "red");
-    $cvvLabel.after('<div class="error" style="color:red;">Please enter CVV!</div>');
-  }
-  if (isValid != true) {
-    $('.error').remove();
+    $creditLabel.after('<div id="ccnum-error" class="error" style="color:red;">Please use a number between 13-16 digits!</div>');
+ }
+   else if (isValid != false) {
+    $('#ccnum-error').remove();
     $creditField.css("border-color", "");
-    $zipField.css("border-color", "");
-    $cvvField.css("border-color", "");
-  } else {
-    $('.error').remove();
+
   }
   return isValid;
 }
 
-//===========================validation function to qualify errors
-function validForm(event){
-  validName();
-  validEmail()
-  validJob()
-  validTshirt()
-  validActivity()
+function validZip(){
+  $('#zip-error').remove();
+  $zipField.css("border-color", "");
+  let isValid = true;
+  let zipRX = /^[0-9]+$/;
+  let $userZip = $('#zip').val();
+  if ( ($userZip.length !== 5 || $userZip.length == 0) && !$userZip.match(zipRX)) {
+    isValid = false;
+    $zipField.css("border-color", "red");
+    $zipLabel.after('<div id="zip-error" class="error" style="color:red;">Please enter zip!</div>');
+  }
+  else {
+   $('#zip-error').remove();
+   $zipField.css("border-color", "");
+ }
+ return isValid;
+}
 
-   if ($('#payment option:selected')[1]) {
-   validCreditCard()
+function validCVV(){
+  $('#cvv-error').remove();
+  $cvvField.css("border-color", "");
+  let cvvRX = /^[0-9]+$/;
+  let $userCVV = $('#cvv').val();
+  if ( ($userCVV.length == 0 || $userCVV.length != 3) && !$userCVV.match(cvvRX) ) {
+     isValid = false;
+     $cvvField.css("border-color", "red");
+     $cvvLabel.after('<div id="cvv-error"class="error" style="color:red;">Please enter CVV!</div>');
+   } else if (isValid != false) {
+     $cvvField.css("border-color", "");
+     $('#cvv-error').remove();
    }
+   return isValid;
+}
+$creditField.on('input', function(){
+  validCCNum();
+});
+$zipField.on('input', function(){
+  validZip();
+});
+$cvvField.on('input', function(){
+  validCVV();
+});
+===========================validation function to qualify errors
+function validForm(){
+  validName();
+  validEmail();
+  validJob();
+  validTshirt();
+  validActivity();
+  validCCNum();
+  validZip();
+  validCVV();
+
+errorDivs = document.querySelectorAll('div');
+  for (let i = 0; i < errorDivs.length; i+= 1){
+    if (errorDivs[i].className === 'error') {
+      return true;
+    }
+  }
 }
 
 //===========================submission event handler that calls error functions.
