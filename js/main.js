@@ -30,9 +30,9 @@ $otherJob.hide();
 $jobSelectMenu.change(function(){
   let $selectJobOpt = $('#title option:selected').text();
     if($selectJobOpt == "Other") {
-      $otherJob.show();
+      $otherJob.show(500);
     } else {
-      $otherJob.hide();
+      $otherJob.hide(500);
     }
 });
 // function that hides the color option select menu until design option is chosen
@@ -258,13 +258,22 @@ function validCCNum(){
     isValid = false;
     $creditField.css("border-color", "red");
     $creditLabel.after('<div id="ccnum-error1" class="error" style="color:red;">Please enter your card number!</div>');
-  } else if ( ($userCCNum.length < 13 || $userCVV.length > 16) || isNaN($userCCNum) ) {
+  } else if ( $userCCNum.length < 13 ) {
     isValid = false;
     $creditField.css("border-color", "red");
     $creditLabel.after('<div id="ccnum-error2" class="error" style="color:red;">Please use a number between 13-16 digits!</div>');
- }
+  }  else if ( $userCCNum.length > 16 ) {
+   isValid = false;
+   $creditField.css("border-color", "red");
+   $creditLabel.after('<div id="ccnum-error2" class="error" style="color:red;">Please use a number between 13-16 digits!</div>');
+  }  else if ( isNaN($userCCNum)) {
+   isValid = false;
+   $creditField.css("border-color", "red");
+   $creditLabel.after('<div id="ccnum-error2" class="error" style="color:red;">Please use a number between 13-16 digits!</div>');
+  }
    else {
-    $('#ccnum-error').remove();
+    $('#ccnum-error1').remove();
+    $('#ccnum-error2').remove();
     $creditField.css("border-color", "");
 
   }
@@ -275,9 +284,8 @@ function validZip(){
   $('#zip-error').remove();
   $zipField.css("border-color", "");
   let isValid = true;
-  let zipRX = /^[0-9]+$/;
   let $userZip = $('#zip').val();
-  if ( $userZip.length !== 5 || isNan($userZip)) {
+  if ( $userZip.length !== 5 || (isNaN($userZip))) {
     isValid = false;
     $zipField.css("border-color", "red");
     $zipLabel.after('<div id="zip-error" class="error" style="color:red;">Please enter zip!</div>');
@@ -294,6 +302,7 @@ function validCVV(){
   $cvvField.css("border-color", "");
   let cvvRX = /^[0-9]+$/;
   let $userCVV = $('#cvv').val();
+  let isValid = true;
   if (  $userCVV.length != 3 || !$userCVV.match(cvvRX) ) {
      isValid = false;
      $cvvField.css("border-color", "red");
@@ -319,11 +328,12 @@ function validForm(event){
   validEmail();
   validTshirt();
   validActivity();
+if ($('#payment option[value="credit card"]').is(':selected')){
   validCCNum();
   validZip();
   validCVV();
-
-errorDivs = document.querySelectorAll('div');
+}
+ let errorDivs = document.querySelectorAll('div');
   for (let i = 0; i < errorDivs.length; i+= 1){
     if (errorDivs[i].className === 'error') {
       return true;
